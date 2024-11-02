@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zerodha Basket Order</title>
+</head>
+<body>
+    <form method="post" id="basket-form" action="https://kite.zerodha.com/connect/basket">
+        <input type="hidden" name="api_key" value="kitedemo" />
+        <input type="hidden" id="basket" name="data" value="" />
+    </form>
+
+    <script>
+        // Get the trading symbol from the URL parameter
+        const urlParams = new URLSearchParams(window.location.search);
+        const tradingSymbol = urlParams.get('tradingsymbol') || 'INFY'; // Default to 'INFY' if not provided
+
+        const your_basket = JSON.stringify([{
+            "variety": "regular",
+            "tradingsymbol": tradingSymbol,
+            "exchange": "NSE",
+            "transaction_type": "BUY",
+            "order_type": "MARKET",
+            "quantity": 10,
+            "readonly": false
+        }]);
+
+        document.getElementById("basket").value = your_basket;
+        document.getElementById("basket-form").submit();
+    </script>
+</body>
+</html>
