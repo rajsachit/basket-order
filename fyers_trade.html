@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fyers API Trading Order</title>
+</head>
+<body>
+    <form method="post" id="fyers-form" action="https://api-connect.fyers.in/redirection">
+        <!-- API Key -->
+        <input type="hidden" name="api_key" value="XNQ201Q7YA-101" />
+        
+        <!-- Data Field (This will be populated dynamically) -->
+        <input type="hidden" id="data" name="data" value="" />
+    </form>
+
+    <script>
+        // Get the trading parameters from the URL (e.g., trading symbol, price, quantity)
+        const urlParams = new URLSearchParams(window.location.search);
+
+        const tradingSymbol = urlParams.get('tradingsymbol') || 'NSE:SBIN-EQ'; // Default to 'NSE:SBIN-EQ' if not provided
+        const price = urlParams.get('price') || 102; // Default price is 102
+        const quantity = urlParams.get('quantity') || 1; // Default quantity is 1
+
+        // Construct the trading order JSON dynamically based on URL parameters
+        const orderData = JSON.stringify([{
+            "price": price,
+            "fyers": "XNQ201Q7YA-101",
+            "symbol": tradingSymbol,
+            "transaction_type": "BUY",
+            "quantity": quantity,
+            "order_type": "MARKET",
+            "product": "CNC"
+        }]);
+
+        // Set the 'data' field to the dynamically constructed order
+        document.getElementById("data").value = orderData;
+
+        // Automatically submit the form
+        document.getElementById("fyers-form").submit();
+    </script>
+</body>
+</html>
